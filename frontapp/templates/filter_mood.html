@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+  {% block sidebar %}
+  {% include "sidebar.html" %}
+  {% endblock sidebar %}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<form method="get">
+<table class = table>
+    <tr><td>Which mood? </td> <td>{{filter.form.mood}}</td></tr>
+    <tr><td>Choose: </td><td>{{filter.form.date_range}}</td></tr>
+</table>
+<input type="submit" value="Okay" class="btn btn-primary">
+</form>
+
+<div class='row'>
+    <div class='col-sm-12'>
+        <div class='col-sm-6'>
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+        <div class='col-sm-6'>
+            <canvas id="myChart2" width="400" height="400"></canvas>
+        </div>
+    </div>
+</div>
+<div class='row'>
+    <div class='col-sm-12'>
+        <div class='col-sm-6'>
+            <canvas id="myChart3" width="400" height="400"></canvas>
+        </div>
+        <div class='col-sm-6'>
+            <canvas id="myChart4" width="400" height="400"></canvas>
+        </div>
+    </div>
+</div>
+</div>
+
+</div>
+
+{% endblock %}
+
+<script>
+{% block jquery %}
+
+var ctx = document.getElementById("myChart");
+var ctx2 = document.getElementById("myChart2");
+var ctx3 = document.getElementById("myChart3");
+var ctx4 = document.getElementById("myChart4");
+
+    var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [{% for obj in filter.qs %}'{{ obj.mood__name }}',{% endfor %}],
+        datasets: [{
+            label: '# of times',
+            data: [{% for obj in filter.qs %}'{{ obj.moodcounts }}',{% endfor %}],
+            backgroundColor: [{% for obj in filter.qs %}'{{ obj.mood__background }}',{% endfor %}],
+            borderColor: [{% for obj in filter.qs %}'{{ obj.mood__border }}',{% endfor %}],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+
+var myChart = new Chart(ctx2, {
+type: 'polarArea',
+data: {
+    labels: [{% for obj in filter.qs %}'{{ obj.mood__name }}',{% endfor %}],
+    datasets: [{
+        label: '# of times',
+        data: [{% for obj in filter.qs %}'{{ obj.moodcounts }}',{% endfor %}],
+        backgroundColor: [{% for obj in filter.qs %}'{{ obj.mood__background }}',{% endfor %}],
+        borderColor: [{% for obj in filter.qs %}'{{ obj.mood__border }}',{% endfor %}],
+        borderWidth: 1
+    }]
+},
+options: {
+    legend: {
+        display: true,
+        position: 'bottom'
+    }
+  }
+});
+
+var myChart = new Chart(ctx3, {
+  type: 'pie',
+  data: {
+    labels: [{% for obj in filter.qs %}'{{ obj.mood__name }}',{% endfor %}],
+    datasets: [{
+        data: [{% for obj in filter.qs %}'{{ obj.moodcounts }}',{% endfor %}],
+        backgroundColor: [{% for obj in filter.qs %}'{{ obj.mood__background }}',{% endfor %}],
+        borderColor: [{% for obj in filter.qs %}'{{ obj.mood__border }}',{% endfor %}],
+        borderWidth: 1,
+        label: "Moods",
+        fill: false
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true
+    }
+  }
+});
+
+var myChart = new Chart(ctx4, {
+  type: 'line',
+  data: {
+    labels: [{% for obj in filter.qs %}'{{ obj.mood__name }}',{% endfor %}],
+    datasets: [{
+        data: [{% for obj in filter.qs %}'{{ obj.moodcounts }}',{% endfor %}],
+        label: "Moods",
+        borderColor: "#3e95cd",
+        fill: false
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true
+    }
+  }
+});
+
+
+{% endblock jquery %}
+
+
+</script>

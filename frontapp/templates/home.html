@@ -1,0 +1,135 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% load static %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+
+  <div class="row">
+    {% block sidebar %}
+    {% include "sidebar.html" %}
+    {% endblock sidebar %}
+  <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1 class="page-header">Welcome {{ user.first_name }}, to your Mood Dashboard</h1>
+
+    <div class="row placeholders">
+      <div class="col-xs-6 col-sm-3 placeholder">
+        <img src="{% static 'img/Happy.png' %}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+        <h4>Happy</h4>
+      </div>
+      <div class="col-xs-6 col-sm-3 placeholder">
+        <img src="{% static 'img/Joyful.png' %}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+        <h4>Joyful</h4>
+      </div>
+      <div class="col-xs-6 col-sm-3 placeholder">
+        <img src="{% static 'img/Anger.png' %}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+        <h4>Angry</h4>
+      </div>
+      <div class="col-xs-6 col-sm-3 placeholder">
+        <img src="{% static 'img/Upset.png' %}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+        <h4>Upset</h4>
+      </div>
+    </div>
+
+    <h2 class="sub-header">Moods to choose from</h2>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Mood</th>
+            <th>Definition</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Ecstatic</td>
+            <td>Very happy, excited and enthusiastic; feeling or showing great enthusiasm</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Happy</td>
+            <td>Feeling/giving pleasure</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Joyful</td>
+            <td>Very happy; causing people to be happy</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Crazy</td>
+            <td>Not sensible; stupid</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Confused</td>
+            <td>Unable to think clearly or to understand what is happening or what somebody is saying</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Surprised</td>
+            <td>Feeling or showing surprise</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Depressed</td>
+            <td>Very sad and without hope</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>Stressed</td>
+            <td>Too anxious and tired to be able to relax</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>Disgusted</td>
+            <td>A strong feeling of dislike for somebody/something that you feel is unacceptable, or for something that looks, smells, etc. unpleasant</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>Disappointed</td>
+            <td>To make somebody feel sad because something that they hope for or expect to happen does not happen or is not as good as they hoped</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>Angry</td>
+            <td>Having strong feelings about something that you dislike very much or about an unfair situation</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>Sad</td>
+            <td>Unhappy or showing unhappiness</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td>Upset</td>
+            <td>Unhappy or disappointed because of something unpleasant that has happened</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td>Frustrated</td>
+            <td>Feeling annoyed and impatient because you cannot do or achieve what you want</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td>Irritated</td>
+            <td>Annoyed or angry</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}
